@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>خدمة كشف تسربات المياه - القصيم</title>
+<style>
+  :root{
+    --blue:#0e6ba8;
+    --blue-dark:#083a5c;
+    --cyan:#2ec4e6;
+    --green:#25d366;
+    --gold:#f2b705;
+    --card-bg:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{
+    height:100%;
+    font-family:'Tahoma','Segoe UI',Arial,sans-serif;
+  }
+  body{
+    background:radial-gradient(circle at 20% 0%, #1189c7 0%, #083a5c 55%, #041f30 100%);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 12px 100px;
+    position:relative;
+    overflow-x:hidden;
+  }
+  body::before, body::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    background:rgba(46,196,230,0.15);
+    filter:blur(10px);
+  }
+  body::before{width:260px;height:260px;top:-60px;right:-60px;}
+  body::after{width:220px;height:220px;bottom:-40px;left:-40px;background:rgba(37,211,102,0.12);}
+
+  .card{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:420px;
+    background:var(--card-bg);
+    border-radius:26px;
+    overflow:hidden;
+    box-shadow:0 25px 60px rgba(0,0,0,0.45);
+    animation:fadeUp .7s ease both;
+  }
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  .card-header{
+    background:linear-gradient(135deg,var(--blue) 0%, var(--blue-dark) 100%);
+    color:#fff;
+    padding:28px 22px 34px;
+    text-align:center;
+    position:relative;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.35);
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:12px;
+    margin-bottom:14px;
+    backdrop-filter:blur(4px);
+  }
+  .badge span.dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--gold);
+    display:inline-block;
+    animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(242,183,5,0.6);}
+    50%{box-shadow:0 0 0 6px rgba(242,183,5,0);}
+  }
+  .icon-drop{
+    width:70px;height:70px;
+    margin:0 auto 14px;
+    background:rgba(255,255,255,0.12);
+    border:2px solid rgba(255,255,255,0.4);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .icon-drop svg{width:34px;height:34px;}
+  .card-header h1{
+    font-size:23px;
+    line-height:1.5;
+    font-weight:800;
+    margin-bottom:8px;
+  }
+  .card-header p.city{
+    font-size:14px;
+    opacity:.9;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+  }
+  .card-header p.city svg{width:15px;height:15px;fill:var(--gold);}
+
+  .offer{
+    margin:-20px 18px 0;
+    position:relative;
+    z-index:3;
+    background:linear-gradient(135deg,var(--gold),#ffd75e);
+    color:#3a2900;
+    border-radius:16px;
+    padding:14px 16px;
+    text-align:center;
+    font-weight:800;
+    font-size:15px;
+    box-shadow:0 10px 24px rgba(242,183,5,0.35);
+  }
+  .offer small{
+    display:block;
+    font-weight:600;
+    font-size:12px;
+    margin-top:4px;
+    opacity:.85;
+  }
+
+  .section{
+    padding:22px 22px 4px;
+  }
+  .section h2{
+    font-size:15px;
+    color:var(--blue-dark);
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:800;
+  }
+  .section h2 .line{
+    flex:1;
+    height:1px;
+    background:linear-gradient(to left, rgba(14,107,168,0.3), transparent);
+  }
+
+  .list{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:6px;
+  }
+  .list li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:#f4f9fc;
+    border:1px solid #e4f0f7;
+    padding:10px 12px;
+    border-radius:12px;
+    font-size:13.5px;
+    color:#1b2b36;
+  }
+  .list li .ico{
+    flex-shrink:0;
+    width:22px;height:22px;
+    border-radius:50%;
+    background:var(--blue);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .list li .ico svg{width:12px;height:12px;fill:#fff;}
+
+  .features{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:6px;
+  }
+  .features .feat{
+    background:#eef9f2;
+    border:1px solid #d8f0e0;
+    border-radius:12px;
+    padding:10px;
+    text-align:center;
+    font-size:12.5px;
+    font-weight:700;
+    color:#0c6b3c;
+  }
+  .features .feat .ico{
+    width:26px;height:26px;
+    margin:0 auto 6px;
+    background:var(--green);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .features .feat .ico svg{width:14px;height:14px;fill:#fff;}
+
+  .contact-box{
+    margin:18px 22px 4px;
+    background:linear-gradient(135deg,#eaf6fc,#dff1f9);
+    border:1px dashed var(--blue);
+    border-radius:14px;
+    padding:14px;
+    text-align:center;
+  }
+  .contact-box .num{
+    font-size:22px;
+    font-weight:900;
+    color:var(--blue-dark);
+    direction:ltr;
+    letter-spacing:1px;
+    margin-top:4px;
+  }
+  .contact-box .lbl{
+    font-size:12.5px;
+    color:#3a5a6b;
+    font-weight:700;
+  }
+
+  .cta-row{
+    display:flex;
+    gap:10px;
+    padding:18px 22px 22px;
+  }
+  .btn{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 10px;
+    border-radius:14px;
+    font-size:14.5px;
+    font-weight:800;
+    text-decoration:none;
+    color:#fff;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{transform:scale(.96);}
+  .btn.call{
+    background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+    box-shadow:0 10px 20px rgba(14,107,168,0.35);
+  }
+  .btn.whatsapp{
+    background:linear-gradient(135deg,#2be878,var(--green));
+    box-shadow:0 10px 20px rgba(37,211,102,0.35);
+  }
+  .btn svg{width:19px;height:19px;fill:#fff;}
+
+  .footer{
+    text-align:center;
+    padding:0 20px 22px;
+    color:#7c95a3;
+    font-size:11.5px;
+    line-height:1.9;
+  }
+  .footer .designer{
+    font-size:12px;
+    color:var(--blue-dark);
+    font-weight:800;
+    margin-bottom:6px;
+  }
+  .footer .designer a{
+    color:var(--green);
+    text-decoration:none;
+    font-weight:800;
+    direction:ltr;
+    display:inline-block;
+  }
+  .footer .rights{
+    color:#a9bcc6;
+  }
+
+  .side-fab{
+    position:fixed;
+    bottom:22px;
+    left:18px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    z-index:50;
+  }
+  .fab{
+    width:56px;height:56px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    box-shadow:0 8px 22px rgba(0,0,0,0.35);
+    animation:floaty 2.6s ease-in-out infinite;
+  }
+  .fab svg{width:26px;height:26px;fill:#fff;}
+  .fab.whatsapp{background:var(--green);}
+  .fab.call{background:var(--blue);animation-delay:.4s;}
+  @keyframes floaty{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+  }
+
+  @media (max-width:380px){
+    .card-header h1{font-size:20px;}
+    .contact-box .num{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="badge"><span class="dot"></span> خدمة طوارئ متوفرة يوميًا</div>
+      <div class="icon-drop">
+        <svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2C12 2 5 11.5 5 16.5C5 20.09 8.13 23 12 23C15.87 23 19 20.09 19 16.5C19 11.5 12 2 12 2Z"/></svg>
+      </div>
+      <h1>خدمة كشف تسربات المياه</h1>
+      <p class="city">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"/></svg>
+        تغطية كاملة لمنطقة القصيم
+      </p>
+    </div>
+
+    <div class="offer">
+      عرض خاص لسكان القصيم
+      <small>احصل على معاينة وعرض سعر مجاني عند التواصل الآن</small>
+    </div>
+
+    <div class="section">
+      <h2>خدماتنا <span class="line"></span></h2>
+      <ul class="list">
+        <li><span class="ico"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span> كشف تسربات المياه في الجدران والأرضيات بدون تكسير</li>
+        <li><span class="ico"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span> كشف تسربات الخزانات العلوية والأرضية</li>
+        <li><span class="ico"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span> حل مشكلة ارتفاع فاتورة المياه نهائيًا</li>
+        <li><span class="ico"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span> إصدار تقارير معتمدة لشركة المياه</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>مميزاتنا <span class="line"></span></h2>
+      <div class="features">
+        <div class="feat">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+          أجهزة إلكترونية حديثة
+        </div>
+        <div class="feat">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 11-14h-7z"/></svg></div>
+          سرعة في الاستجابة
+        </div>
+        <div class="feat">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg></div>
+          تقارير معتمدة 100%
+        </div>
+        <div class="feat">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div>
+          تغطية كل القصيم
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-box">
+      <div class="lbl">للتواصل والحجز مباشرة</div>
+      <div class="num">0536065700</div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn call" href="tel:0536065700">
+        <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.25 1.01l-2.2 2.21z"/></svg>
+        اتصال الآن
+      </a>
+      <a class="btn whatsapp" href="https://wa.me/966536065700" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.94 11.94 0 0012.03 0C5.5 0 .2 5.3.2 11.83c0 2.08.55 4.1 1.6 5.89L0 24l6.44-1.7a11.86 11.86 0 005.58 1.42h.01c6.53 0 11.83-5.3 11.83-11.83 0-3.16-1.23-6.13-3.34-8.41zM12.03 21.4h-.01a9.6 9.6 0 01-4.9-1.34l-.35-.21-3.62.95.97-3.53-.23-.36a9.6 9.6 0 01-1.48-5.08c0-5.32 4.33-9.65 9.66-9.65a9.6 9.6 0 016.83 2.83 9.58 9.58 0 012.82 6.82c0 5.33-4.33 9.57-9.69 9.57zm5.3-7.2c-.29-.15-1.72-.85-1.99-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.15-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.44-.86-.77-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.58-.9-2.17-.24-.57-.48-.5-.66-.51h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.05 2.81 1.19 3 .15.2 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.11.56-.08 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.13-.26-.2-.55-.35z"/></svg>
+        واتساب
+      </a>
+    </div>
+
+    <div class="footer">
+      <div class="designer">
+        تم التصميم بواسطة م. نجوى إبراهيم<br>
+        <a href="https://wa.me/201029095046" target="_blank" rel="noopener">+20 10 29095046</a>
+      </div>
+      <div class="rights">جميع الحقوق محفوظة © خدمة كشف تسربات المياه - القصيم</div>
+    </div>
+  </div>
+
+  <div class="side-fab">
+    <a class="fab whatsapp" href="https://wa.me/966536065700" target="_blank" rel="noopener" aria-label="واتساب">
+      <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.94 11.94 0 0012.03 0C5.5 0 .2 5.3.2 11.83c0 2.08.55 4.1 1.6 5.89L0 24l6.44-1.7a11.86 11.86 0 005.58 1.42h.01c6.53 0 11.83-5.3 11.83-11.83 0-3.16-1.23-6.13-3.34-8.41zM12.03 21.4h-.01a9.6 9.6 0 01-4.9-1.34l-.35-.21-3.62.95.97-3.53-.23-.36a9.6 9.6 0 01-1.48-5.08c0-5.32 4.33-9.65 9.66-9.65a9.6 9.6 0 016.83 2.83 9.58 9.58 0 012.82 6.82c0 5.33-4.33 9.57-9.69 9.57zm5.3-7.2c-.29-.15-1.72-.85-1.99-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.15-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.44-.86-.77-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.58-.9-2.17-.24-.57-.48-.5-.66-.51h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.43 0 1.43 1.05 2.81 1.19 3 .15.2 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.11.56-.08 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.13-.26-.2-.55-.35z"/></svg>
+    </a>
+    <a class="fab call" href="tel:0536065700" aria-label="اتصال">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.25 1.01l-2.2 2.21z"/></svg>
+    </a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var card = document.querySelector('.card');
+      card.style.opacity = '0';
+      requestAnimationFrame(function(){
+        card.style.transition = 'opacity .6s ease';
+        card.style.opacity = '1';
+      });
+
+      document.querySelectorAll('a.btn, a.fab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          btn.style.transform = 'scale(0.92)';
+          setTimeout(function () {
+            btn.style.transform = '';
+          }, 150);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
